@@ -35,7 +35,7 @@ function App() {
   return (
     <div className=" overflow-hidden  style={{color:#cec8ef }}">
       <Header />
-      <Search callback={setAdrress}/>
+      <Search callback={(address) => setAdrress(address)}/>
 
       <div className='mt-[40px] h-[70px] border-2 border-transparent flex justify-center items-center shadow-sm'>
       <div className='ml-[30px] mr-[30px] bg-purple-300 w-2/3 border border-transparent rounded-xl'>

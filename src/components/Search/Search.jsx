@@ -1,33 +1,36 @@
-import React, { useState, useEffect } from 'react';
-import { FaSearch, FaCopy } from 'react-icons/fa';
-import { CopyToClipboard } from 'react-copy-to-clipboard';
-import { createWeb3Name } from '@web3-name-sdk/core';
+import React, { useState, useEffect } from "react";
+import { FaSearch, FaCopy } from "react-icons/fa";
+import { CopyToClipboard } from "react-copy-to-clipboard";
+import { createWeb3Name } from "@web3-name-sdk/core";
 
 const web3name = createWeb3Name();
 
 function Search(props) {
   const [copied, setCopied] = useState(false);
-  const [inputValue, setInputValue] = useState('');
+  const [inputValue, setInputValue] = useState("");
   const [domains, setDomains] = useState([]);
-  const [address, setAddress] = useState('');
+  const [address, setAddress] = useState("");
 
   const handleInputChange = (e) => {
     setInputValue(e.target.value);
   };
 
   const handleSearch = async () => {
-    console.log('Searching for:', inputValue);
+    console.log("Searching for:", inputValue);
     try {
       const resolvedAddress = await web3name.getAddress(inputValue);
-      console.log('Resolved address:', resolvedAddress);
-      if (resolvedAddress && resolvedAddress !== '0000000') {
+      console.log("Resolved address:", resolvedAddress);
+      if (resolvedAddress && resolvedAddress !== "0000000") {
         setAddress(resolvedAddress);
-        setDomains([{ id: inputValue, resolvedAddress: { id: resolvedAddress } }]);
+        props.callback(resolvedAddress);
+        setDomains([
+          { id: inputValue, resolvedAddress: { id: resolvedAddress } },
+        ]);
       } else {
-        console.error('Error: Address not found or invalid.');
+        console.error("Error: Address not found or invalid.");
       }
     } catch (error) {
-      console.error('Error fetching address:', error);
+      console.error("Error fetching address:", error);
     }
   };
 
@@ -53,17 +56,17 @@ function Search(props) {
 
   return (
     <>
-      <div className='mt-[15px] flex justify-between rounded-xl border-solid border-2 border-transparent h-[60px] p-[10px] w-[400px] mx-auto bg-slate-300 shadow-2xl bg-gradient-to-l from-purple-300 via-purple-300 to-purple-400'>
-        <div className='w-[400px] border border-transparent hover:border-slate-800 mr-[10px] rounded-xl h-[40px] flex hover:border-solid hover:border-2 font-medium text-lg px-[10px]'>
+      <div className="mt-[15px] flex justify-between rounded-xl border-solid border-2 border-transparent h-[60px] p-[10px] w-[400px] mx-auto bg-slate-300 shadow-2xl bg-gradient-to-l from-purple-300 via-purple-300 to-purple-400">
+        <div className="w-[400px] border border-transparent hover:border-slate-800 mr-[10px] rounded-xl h-[40px] flex hover:border-solid hover:border-2 font-medium text-lg px-[10px]">
           <input
-            className='h-[40px] w-[300px] overflow-hidden focus:outline-none bg-transparent'
-            type='text'
-            id='myInput'
+            className="h-[40px] w-[300px] overflow-hidden focus:outline-none bg-transparent"
+            type="text"
+            id="myInput"
             value={inputValue}
-            placeholder='Type- name.eth'
+            placeholder="Type- name.eth"
             onChange={handleInputChange}
           />
-          <div className='flex items-center mr-[5px] text-slate-800'>
+          <div className="flex items-center mr-[5px] text-slate-800">
             <button onClick={handleSearch}>
               <FaSearch size={30} />
             </button>
@@ -71,20 +74,26 @@ function Search(props) {
         </div>
       </div>
 
-      <div className='border border-transparent mt-[40px] flex flex-col justify-center shadow-sm '>
-        <div className='mt-[40px] text-2xl font-medium text-slate-800'>
-          <span className='shadow-xl'>Account</span>
+      <div className="border border-transparent mt-[40px] flex flex-col justify-center shadow-sm ">
+        <div className="mt-[40px] text-2xl font-medium text-slate-800">
+          <span className="shadow-xl">Account</span>
         </div>
-        <div className='text-slate-800 text-lg font-semibold mt-[5px] mx-auto items-center h-[40px] w-[900px] bg-purple-300 border rounded-xl border-transparent hover:scale-110 transition-all duration-500 ease-in-out bg-gradient-to-l from-purple-300 via-purple-300 to-purple-400'>
-          {domains.length > 0 && domains.map((domain, index) => (
-            <div key={index}>
-              {domain.resolvedAddress.id}
-              <CopyToClipboard onCopy={handleCopy} text={domain.resolvedAddress.id}>
-                <button className='ml-[50px]'><FaCopy /></button>
-              </CopyToClipboard>
-              {copied && <span>copied</span>}
-            </div>
-          ))}
+        <div className="text-slate-800 text-lg font-semibold mt-[5px] mx-auto items-center h-[40px] w-[900px] bg-purple-300 border rounded-xl border-transparent hover:scale-110 transition-all duration-500 ease-in-out bg-gradient-to-l from-purple-300 via-purple-300 to-purple-400">
+          {domains.length > 0 &&
+            domains.map((domain, index) => (
+              <div key={index}>
+                {domain.resolvedAddress.id}
+                <CopyToClipboard
+                  onCopy={handleCopy}
+                  text={domain.resolvedAddress.id}
+                >
+                  <button className="ml-[50px]">
+                    <FaCopy />
+                  </button>
+                </CopyToClipboard>
+                {copied && <span>copied</span>}
+              </div>
+            ))}
         </div>
       </div>
     </>
@@ -93,13 +102,8 @@ function Search(props) {
 
 export default Search;
 
-
-
-
-
-
-
-    {/* <div className='w-[200px] border border-transparent hover:border-slate-800 mr-[10px] rounded-xl h-[40px]
+{
+  /* <div className='w-[200px] border border-transparent hover:border-slate-800 mr-[10px] rounded-xl h-[40px]
     hover:border-solid hover:border-2'>
     
     <select value={selectedOption} onChange={handleOptionChange}
@@ -109,52 +113,43 @@ export default Search;
         <option value="Option2">Tokens</option>
         <option value="Option3">Domain Names</option>   
       </select>
-    </div> */}
+    </div> */
+}
 
+// const QueryURL="https://gateway-arbitrum.network.thegraph.com/api/c5c120445d0fcad08bebcd0dad8d3428/subgraphs/id/AYMzWnwmKdU7qXswBtCBKCUUTTCGLBCuurTkbDMsahUc";
 
-    
-  // const QueryURL="https://gateway-arbitrum.network.thegraph.com/api/c5c120445d0fcad08bebcd0dad8d3428/subgraphs/id/AYMzWnwmKdU7qXswBtCBKCUUTTCGLBCuurTkbDMsahUc";
+// c5c120445d0fcad08bebcd0dad8d3428
 
-  // c5c120445d0fcad08bebcd0dad8d3428
+// const client = createClient({
+//   url: QueryURL,
+//   exchanges: [cacheExchange, fetchExchange],
+// });
 
-  // const client = createClient({
-  //   url: QueryURL,
-  //   exchanges: [cacheExchange, fetchExchange],
-  // });
+// const query = `
+// {
+//   domains(where: {name: "${inputValue}"}) {
+//     resolvedAddress {
+//       id
+//     }
+//   }
+// }
+// `;
 
-  // const query = `
-  // {
-  //   domains(where: {name: "${inputValue}"}) {
-  //     resolvedAddress {
-  //       id
-  //     }
-  //   }
-  // }
-  // `;
+// const getDomains = async () => {
+//   console.log(query)
+//   const { data } = await client.query(query).toPromise();
+//   // console.log(data);
+//   setDomains(data.domains);
+//   console.log(data)
+//   props.callback(data.domains[0].resolvedAddress.id)
+// };
 
+// const handleInputChange = (e) => {
+//   setInputValue(e.target.value);
+//   // console.log(e.target.value);
+// };
 
-
-
-  // const getDomains = async () => {
-  //   console.log(query)
-  //   const { data } = await client.query(query).toPromise();
-  //   // console.log(data);
-  //   setDomains(data.domains);
-  //   console.log(data)
-  //   props.callback(data.domains[0].resolvedAddress.id)
-  // };
-
-
-  // const handleInputChange = (e) => {
-  //   setInputValue(e.target.value);
-  //   // console.log(e.target.value);
-  // };
-
-  // const handleSearch = () => {
-  //   console.log('Search clicked with value:', inputValue);
-  //   getDomains(); 
-  // };
-
-
-
-  
+// const handleSearch = () => {
+//   console.log('Search clicked with value:', inputValue);
+//   getDomains();
+// };

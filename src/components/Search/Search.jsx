@@ -41,18 +41,7 @@ function Search(props) {
     }, 2000);
   };
 
-  // useEffect(() => {
-  //   // Example of prefetching or handling specific cases on component mount
-  //   const fetchAddress = async () => {
-  //     try {
-  //       const resolvedAddress = await web3name.getAddress('spaceid.bnb');
-  //       console.log('Prefetched address for spaceid.bnb:', resolvedAddress);
-  //     } catch (error) {
-  //       console.error('Error prefetching address:', error);
-  //     }
-  //   };
-  //   fetchAddress();
-  // }, []);
+
 
   return (
     <>
@@ -63,7 +52,7 @@ function Search(props) {
             type="text"
             id="myInput"
             value={inputValue}
-            placeholder="Type- name.eth"
+            placeholder="Type- name.bnb"
             onChange={handleInputChange}
           />
           <div className="flex items-center mr-[5px] text-slate-800">
@@ -101,55 +90,3 @@ function Search(props) {
 }
 
 export default Search;
-
-{
-  /* <div className='w-[200px] border border-transparent hover:border-slate-800 mr-[10px] rounded-xl h-[40px]
-    hover:border-solid hover:border-2'>
-    
-    <select value={selectedOption} onChange={handleOptionChange}
-    className='h-[40px] w-[150px] overflow-hidden focus:outline-none bg-transparent font-medium text-lg'>
-        <option value="All">All Filters</option>
-        <option value="Option1">Addresses</option>
-        <option value="Option2">Tokens</option>
-        <option value="Option3">Domain Names</option>   
-      </select>
-    </div> */
-}
-
-// const QueryURL="https://gateway-arbitrum.network.thegraph.com/api/c5c120445d0fcad08bebcd0dad8d3428/subgraphs/id/AYMzWnwmKdU7qXswBtCBKCUUTTCGLBCuurTkbDMsahUc";
-
-// c5c120445d0fcad08bebcd0dad8d3428
-
-// const client = createClient({
-//   url: QueryURL,
-//   exchanges: [cacheExchange, fetchExchange],
-// });
-
-// const query = `
-// {
-//   domains(where: {name: "${inputValue}"}) {
-//     resolvedAddress {
-//       id
-//     }
-//   }
-// }
-// `;
-
-// const getDomains = async () => {
-//   console.log(query)
-//   const { data } = await client.query(query).toPromise();
-//   // console.log(data);
-//   setDomains(data.domains);
-//   console.log(data)
-//   props.callback(data.domains[0].resolvedAddress.id)
-// };
-
-// const handleInputChange = (e) => {
-//   setInputValue(e.target.value);
-//   // console.log(e.target.value);
-// };
-
-// const handleSearch = () => {
-//   console.log('Search clicked with value:', inputValue);
-//   getDomains();
-// };

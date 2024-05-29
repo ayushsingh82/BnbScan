@@ -4,6 +4,9 @@
 
 ScrollScan is a tool designed to simplify the tracking of transactions and balances within the Scroll domain. Tracking transactions and balances through the Scroll domain can be challenging, so ScrollScan aims to provide a one-stop solution for tracking addresses, balances, internal transactions, and external transactions.
 
+![image](https://github.com/ayushsingh82/BnbScan/assets/121667116/ae644c61-fb8a-43ed-94fe-36276b31e358)
+
+
 ## Features
 
 - **Address Tracking**: Easily track addresses within the Scroll domain.

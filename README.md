@@ -1,3 +1,6 @@
+#HollowAi character link
+https://www.holoworldai.com/chat/myLQTaO5c7uygkceMd9W
+
 # BinanceScan
 
 ## Introduction
